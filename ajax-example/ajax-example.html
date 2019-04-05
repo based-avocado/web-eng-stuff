@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Super Fun Ajax Example!</h1>
+<h3>Learn some info about me...</h3>
+<select id="info-select">
+  <option value="name">Name</option>
+  <option value="age">Age</option>
+  <option value="fav color">Favorite Color</option>
+</select>
+<button type="button" onclick="loadInfo()">Load Info</button> </br>
+<div id="info" style="margin-bottom:30px"></div>
+<h3>Example RSS feed:</h3>
+
+<script>
+  function loadInfo() {
+    loadWithAjax('good-info.json', displayInfo);
+    loadWithAjax('bad-info.json', displayInfo);
+  }
+
+  function loadWithAjax(url, callback) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        callback(this, url);
+      }
+    };
+    xhttp.open("GET", url, true);
+    xhttp.send();
+  }
+
+  function displayInfo(xhttp, url) {
+    const infoSelection = document.getElementById("info-select").value;
+    try {
+      const response = JSON.parse(xhttp.responseText);
+      document.getElementById("info").innerHTML = response[infoSelection];
+    } catch {
+      console.error(`Failed to parse resource ${url} from server, expected valid json`);
+    }
+  }
+</script>
+
+</body>
+</html>
