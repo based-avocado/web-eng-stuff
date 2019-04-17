@@ -36,12 +36,12 @@
             <label for="pwd">Password:</label>
             <input type="password" class="form-control" id="pwd">
           </div>
-          <p>Don't have an account? Sign up here:</p>
           <!-- End of Login form-->
+          <a href="signup.html">Don't have an account? Sign up here</a>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Login</button>
+          <button type="button" class="btn btn-primary" onclick="loadWithAjax('user-database.json', login)">Login</button>
         </div>
       </div>
     </div>

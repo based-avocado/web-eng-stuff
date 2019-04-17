@@ -19,6 +19,33 @@ function loadWithAjax(url, callback) {
 }
 
 /**
+ * Callback used for handling logins.
+ *
+ * @param {JSON} xhttp - The user database
+ */
+function login(xhttp) {
+  username = document.getElementById("usr").value;
+  password = document.getElementById("pwd").value;
+  console.log(`[DEBUG] Attempting to login with username ${username} and password ${password}`);
+
+  var data = JSON.parse(xhttp.responseText);
+  console.log("[DEBUG] database is: ", data);
+
+  let loggedIn = false;
+  data.users.forEach(user => {
+    if (user.username == username && user.password == password) {
+      // Make this actually do something
+      alert("Login successful");
+      loggedIn = true;
+    }
+  });
+
+  if (!loggedIn){
+    alert("Login unsuccessful - check your credentials");
+  }
+}
+
+/**
  * Callback used for displaying RSS feeds. Dynamically creates list items and
  * populates them with information from the RSS feed.
  *
