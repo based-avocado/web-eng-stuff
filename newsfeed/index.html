@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript" src="https://rss2json.com/gfapi.js"></script>
+  <script type="text/javascript" src="ajax-example.js"></script>
+</head>
+<body>
+  <h1>Sports Feed Aggregator</h1>
+  <p>welcome to the future of sports feed aggregation</p>
+  <h3>Choose a sport to check out...</h3>
+  <select id="info-select">
+    <option value="http://www.espn.com/espn/rss/mlb/news">MLB</option>
+    <option value="http://www.espn.com/espn/rss/nfl/news">NFL</option>
+    <option value="http://www.espn.com/espn/rss/nhl/news">NHL</option>
+  </select>
+  <button type="button" onclick="loadFeed()">Load Sports Feed</button>
+  <div id="feed"></div>
+</body>
+</html>
