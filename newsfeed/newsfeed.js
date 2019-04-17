@@ -38,7 +38,7 @@ function displayFeed(xhttp) {
     data.items.forEach(item => {
       var itemContainer = document.createElement('DIV');
       itemContainer.setAttribute("style", "border-style: solid; margin: 15px;");
-      var itemTitleElement = document.createElement('H2');
+      var itemTitleElement = document.createElement('H5');
       var itemLinkElement = document.createElement('A');
       var itemDescriptionElement = document.createElement('P');
 
@@ -54,7 +54,7 @@ function displayFeed(xhttp) {
       itemsContainer.appendChild(itemContainer);
     });
 
-    var titleElement = document.createElement('H1');
+    var titleElement = document.createElement('H3');
     titleElement.innerText = data.feed.title;
     feed.appendChild(titleElement);
     feed.appendChild(itemsContainer);
