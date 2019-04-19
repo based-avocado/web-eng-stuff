@@ -9,7 +9,7 @@
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="https://rss2json.com/gfapi.js"></script>
 </head>
-<body>
+<body onload="loadWithAjax('https://api.rss2json.com/v1/api.json?rss_url=http://www.espn.com/espn/rss/mlb/news', displayFeed);">
 
   <!-- Login modal trigger -->
   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
@@ -49,6 +49,7 @@
 
   <h1>Sports Feed Aggregator</h1>
   <p>welcome to the future of sports feed aggregation</p>
+  <p id="login-status"></p>
   <div class="form-inline">
       <h5>Choose a sport to check out...</h5>
       <select class="form-control" id="info-select">
