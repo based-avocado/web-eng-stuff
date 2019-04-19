@@ -10,7 +10,7 @@
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="https://rss2json.com/gfapi.js"></script>
 </head>
-<body onload="loadWithAjax('https://api.rss2json.com/v1/api.json?rss_url=http://www.espn.com/espn/rss/mlb/news', displayFeed);">
+<body onload="loadFeed()">
   <!-- Login Modal -->
   <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -52,14 +52,11 @@
     </button>
     <p id="login-status"></p>
 
-    <div class="form-inline">
+    <div>
       <h5>Choose a sport to check out...</h5>
-      <select class="form-control" id="info-select">
-        <option value="http://www.espn.com/espn/rss/mlb/news">MLB</option>
-        <option value="http://www.espn.com/espn/rss/nfl/news">NFL</option>
-        <option value="http://www.espn.com/espn/rss/nhl/news">NHL</option>
-      </select>
-      <button type="submit" class="btn btn-primary" onclick="loadFeed()">Load Sports Feed</button>
+        <label class="checkbox-inline"> <input type="checkbox" id="mlb" onclick="loadFeed()">MLB</label>
+        <label class="checkbox-inline"> <input type="checkbox" id="nfl" onclick="loadFeed()">NFL</label>
+        <label class="checkbox-inline"> <input type="checkbox" id="nhl" onclick="loadFeed()">NHL</label>
     </div> <br>
     <div id="feed"></div>
   </div>

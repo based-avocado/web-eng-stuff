@@ -1,10 +1,39 @@
 /**
- * Handles loading a feed. Fetches the desired feed url from <select id="info-select">.
+ * Handles loading an aggregate feed. Filters out desired feeds.
  */
 function loadFeed() {
-  feedSelection = document.getElementById("info-select").value;
-  console.log("Attempting to load feed: " + feedSelection);
-  loadWithAjax(`https://api.rss2json.com/v1/api.json?rss_url=${feedSelection}`, displayFeed);
+  const rss2json = "https://api.rss2json.com/v1/api.json?rss_url="
+
+  var mlb = $.ajax({url: rss2json + "http://www.espn.com/espn/rss/mlb/news"});
+  var nfl = $.ajax({url: rss2json + "http://www.espn.com/espn/rss/nfl/news"});
+  var nhl = $.ajax({url: rss2json + "http://www.espn.com/espn/rss/nhl/news"});
+
+  $.when(mlb, nfl, nhl).done(function(mlbResult, nflResult, nhlResult) {
+    let aggregateFeed = []
+    // Each returned resolve has the following structure:
+    // [data, textStatus, jqXHR]
+    // e.g. To access returned data, access the array at index 0
+
+    if(document.getElementById("mlb").checked) {
+      mlbResult[0].items.forEach(item => {
+        aggregateFeed.push(item);
+      });
+    }
+
+    if(document.getElementById("nfl").checked) {
+      nflResult[0].items.forEach(item => {
+        aggregateFeed.push(item);
+      });
+    }
+
+    if(document.getElementById("nhl").checked) {
+      nhlResult[0].items.forEach(item => {
+        aggregateFeed.push(item);
+      });
+    }
+
+    displayFeed(aggregateFeed);
+  });
 }
 
 function loadWithAjax(url, callback) {
@@ -75,48 +104,44 @@ function login(xhttp) {
 }
 
 /**
- * Callback used for displaying RSS feeds. Dynamically creates list items and
+ * Callback used for fetching an RSS feed. Dynamically creates list items and
  * populates them with information from the RSS feed.
  *
  * @param {JSON} xhttp - Selected RSS feed, jsonified
  */
-function displayFeed(xhttp) {
-  var feed = document.getElementById('feed');
+function displayFeed(aggFeed) {
+  var displayAggFeed = document.getElementById('feed');
 
   // Clean up any existing children
-  while (feed.hasChildNodes()) {
-    feed.removeChild(feed.firstChild);
+  while (displayAggFeed.hasChildNodes()) {
+    displayAggFeed.removeChild(feed.firstChild);
   }
 
-  var data = JSON.parse(xhttp.responseText);
-  var itemsContainer = document.createElement('DIV');
-  if (data.status == 'ok') {
-    data.items.forEach(item => {
-      var itemContainer = document.createElement('DIV');
-      itemContainer.setAttribute("style", `border-style: solid;
-        margin: 15px;
-        background: white;
-        padding: 10px;
-        border-radius: 10px;`);
-      var itemTitleElement = document.createElement('H5');
-      var itemLinkElement = document.createElement('A');
-      var itemDescriptionElement = document.createElement('P');
+  // The actual items that are going on the displayed feed
+  var feedItems = document.createElement('DIV');
 
-      itemLinkElement.setAttribute('href', item.link);
-      itemLinkElement.innerText = item.title;
-      itemTitleElement.appendChild(itemLinkElement);
+  for (const item of aggFeed) {
+    var itemContainer = document.createElement('DIV');
+    itemContainer.setAttribute("style", `border-style: solid;
+      margin: 15px;
+      background: white;
+      padding: 10px;
+      border-radius: 10px;`);
+    var itemTitleElement = document.createElement('H5');
+    var itemLinkElement = document.createElement('A');
+    var itemDescriptionElement = document.createElement('P');
 
-      // note: make sure the feed is XSS safe before using innerHTML
-      itemDescriptionElement.innerHTML = item.description;
+    itemLinkElement.setAttribute('href', item.link);
+    itemLinkElement.innerText = item.title;
+    itemTitleElement.appendChild(itemLinkElement);
 
-      itemContainer.appendChild(itemTitleElement);
-      itemContainer.appendChild(itemDescriptionElement);
-      itemsContainer.appendChild(itemContainer);
-    });
+    // note: make sure the feed is XSS safe before using innerHTML
+    itemDescriptionElement.innerHTML = item.description;
 
-    var titleElement = document.createElement('H3');
-    titleElement.innerText = data.feed.title;
-    feed.appendChild(titleElement);
-    feed.appendChild(itemsContainer);
+    itemContainer.appendChild(itemTitleElement);
+    itemContainer.appendChild(itemDescriptionElement);
+    feedItems.appendChild(itemContainer);
   }
+
+  displayAggFeed.appendChild(feedItems);
 }
