@@ -78,7 +78,11 @@ function displayFeed(xhttp) {
   if (data.status == 'ok') {
     data.items.forEach(item => {
       var itemContainer = document.createElement('DIV');
-      itemContainer.setAttribute("style", "border-style: solid; margin: 15px;");
+      itemContainer.setAttribute("style", `border-style: solid;
+        margin: 15px;
+        background: white;
+        padding: 10px;
+        border-radius: 10px;`);
       var itemTitleElement = document.createElement('H5');
       var itemLinkElement = document.createElement('A');
       var itemDescriptionElement = document.createElement('P');

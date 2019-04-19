@@ -28,9 +28,9 @@ body {
 }
 
 .backdrop {
-  background: rgba(245, 245, 245, .5);
+  background: rgba(245, 245, 245, .8);
   padding: 20px;
-  width: 75%;
+  width: 90%;
   /*
     Div should go to the bottom of the page
     https://stackoverflow.com/questions/22934016/extend-div-to-bottom-of-page-only-html-and-css

@@ -2,6 +2,7 @@
 <html>
 <head>
   <script type="text/javascript" src="newsfeed.js"></script>
+  <link rel="stylesheet" type="text/css" href="newsfeed.css">
 
   <!-- Third party dependencies -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -10,12 +11,6 @@
   <script type="text/javascript" src="https://rss2json.com/gfapi.js"></script>
 </head>
 <body onload="loadWithAjax('https://api.rss2json.com/v1/api.json?rss_url=http://www.espn.com/espn/rss/mlb/news', displayFeed);">
-
-  <!-- Login modal trigger -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
-    Login
-  </button>
-
   <!-- Login Modal -->
   <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -47,10 +42,17 @@
     </div>
   </div>
 
-  <h1>Sports Feed Aggregator</h1>
-  <p>welcome to the future of sports feed aggregation</p>
-  <p id="login-status"></p>
-  <div class="form-inline">
+  <div class="backdrop">
+    <h1>Totally Sweet Sports Feed Aggregator</h1>
+    <p>Welcome to the future of sports feed aggregation, nerd</p>
+
+    <!-- Login modal trigger -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">
+      Login
+    </button>
+    <p id="login-status"></p>
+
+    <div class="form-inline">
       <h5>Choose a sport to check out...</h5>
       <select class="form-control" id="info-select">
         <option value="http://www.espn.com/espn/rss/mlb/news">MLB</option>
@@ -58,7 +60,8 @@
         <option value="http://www.espn.com/espn/rss/nhl/news">NHL</option>
       </select>
       <button type="submit" class="btn btn-primary" onclick="loadFeed()">Load Sports Feed</button>
-  </div> <br>
-  <div id="feed"></div>
+    </div> <br>
+    <div id="feed"></div>
+  </div>
 </body>
 </html>
