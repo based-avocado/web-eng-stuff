@@ -18,6 +18,12 @@ function loadWithAjax(url, callback) {
   xhttp.send();
 }
 
+/**
+ * WARNING: highly insecure, don't use this for anything real for the love of god
+ *
+ * Used for handling user signup - sends username and password to be added to "database" via
+ * plain-text.
+ */
 function signup() {
   let username = document.getElementById("usr").value;
   let password = document.getElementById("pwd").value;
@@ -37,19 +43,28 @@ function signup() {
  * @param {JSON} xhttp - The user database
  */
 function login(xhttp) {
-  username = document.getElementById("usr").value;
-  password = document.getElementById("pwd").value;
-  console.log(`[DEBUG] Attempting to login with username ${username} and password ${password}`);
-
+  let username = document.getElementById("usr").value;
+  let password = document.getElementById("pwd").value;
   let data = JSON.parse(xhttp.responseText);
-  console.log("[DEBUG] database is: ", data);
-
   let loggedIn = false;
+
   data.users.forEach(user => {
     if (user.username == username && user.password == password) {
-      alert("Login successful");
-      document.getElementById("login-status").innerText = `Logged in as ${username}`
-      document.cookie = `username=${username}`;
+      // Update displayed login status
+      let login_status_str;
+      if (localStorage.getItem(username) === null) {
+        login_status_str = `Logged in as ${username}`;
+      } else {
+        login_status_str = `Logged in as ${username}; last login at ${localStorage.getItem(username)}`;
+      }
+      document.getElementById("login-status").innerText = login_status_str;
+
+      // Set the active user for a session. Should be used for favorites.
+      sessionStorage.setItem("activeUser", username);
+
+      // Keep track of last login for each user
+      let timestamp = new Date().toLocaleString();
+      localStorage.setItem(username, timestamp);
       loggedIn = true;
     }
   });
