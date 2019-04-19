@@ -9,13 +9,26 @@ function loadFeed() {
 
 function loadWithAjax(url, callback) {
   var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
+  xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       callback(this, url);
     }
   };
   xhttp.open("GET", url, true);
   xhttp.send();
+}
+
+function signup() {
+  let username = document.getElementById("usr").value;
+  let password = document.getElementById("pwd").value;
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      // could have a callback here if needed I guess
+    }
+  };
+  xmlhttp.open("GET", "server.php?username=" + username + "&password=" + password, true);
+  xmlhttp.send();
 }
 
 /**
@@ -28,14 +41,15 @@ function login(xhttp) {
   password = document.getElementById("pwd").value;
   console.log(`[DEBUG] Attempting to login with username ${username} and password ${password}`);
 
-  var data = JSON.parse(xhttp.responseText);
+  let data = JSON.parse(xhttp.responseText);
   console.log("[DEBUG] database is: ", data);
 
   let loggedIn = false;
   data.users.forEach(user => {
     if (user.username == username && user.password == password) {
-      // Make this actually do something
       alert("Login successful");
+      document.getElementById("login-status").innerText = `Logged in as ${username}`
+      document.cookie = `username=${username}`;
       loggedIn = true;
     }
   });
@@ -87,6 +101,3 @@ function displayFeed(xhttp) {
     feed.appendChild(itemsContainer);
   }
 }
-
-// Start up RSS feed using rss2json to handle conversions
-loadWithAjax("https://api.rss2json.com/v1/api.json?rss_url=http://www.espn.com/espn/rss/mlb/news", displayFeed);
