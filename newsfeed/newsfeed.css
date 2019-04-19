@@ -1,0 +1,40 @@
+body {
+  /*Background image stuff: https://css-tricks.com/perfect-full-page-background-image/*/
+  background: url("images/bg.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.signup-form {
+  background: rgba(245, 245, 245, .8);
+  width: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 20px;
+  overflow: auto;
+  border-radius: 25px;
+}
+
+.backdrop {
+  background: rgba(245, 245, 245, .5);
+  padding: 20px;
+  width: 75%;
+  /*
+    Div should go to the bottom of the page
+    https://stackoverflow.com/questions/22934016/extend-div-to-bottom-of-page-only-html-and-css
+  */
+  min-height: 100vh;
+  margin: 0 auto;
+}
