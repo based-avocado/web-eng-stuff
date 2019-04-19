@@ -117,6 +117,12 @@ function displayFeed(aggFeed) {
     displayAggFeed.removeChild(feed.firstChild);
   }
 
+  // Sort through items by date, preemptively
+  aggFeed.sort(function(a, b) {
+    var dateA = new Date(a.pubDate), dateB = new Date(b.pubDate);
+    return dateB - dateA;
+  });
+
   // The actual items that are going on the displayed feed
   var feedItems = document.createElement('DIV');
 
@@ -130,16 +136,19 @@ function displayFeed(aggFeed) {
     var itemTitleElement = document.createElement('H5');
     var itemLinkElement = document.createElement('A');
     var itemDescriptionElement = document.createElement('P');
+    var itemDateElement = document.createElement('I');
 
     itemLinkElement.setAttribute('href', item.link);
     itemLinkElement.innerText = item.title;
     itemTitleElement.appendChild(itemLinkElement);
 
-    // note: make sure the feed is XSS safe before using innerHTML
-    itemDescriptionElement.innerHTML = item.description;
+    itemDescriptionElement.innerText = item.description;
+
+    itemDateElement.innerText = `Published: ${item.pubDate}`;
 
     itemContainer.appendChild(itemTitleElement);
     itemContainer.appendChild(itemDescriptionElement);
+    itemContainer.appendChild(itemDateElement);
     feedItems.appendChild(itemContainer);
   }
 
